@@ -16,12 +16,13 @@ namespace Petrolhead2016XT
 {
 
    /// <summary>
-   /// App class
    /// Provides bootstrapper functionality.
    /// </summary>
     sealed partial class App : Template10.Common.BootStrapper
     {
-       
+       /// <summary>
+       /// Initializes telemetry collection and important variables.
+       /// </summary>
         public App()
         {
             TelemetryConfiguration.Active.InstrumentationKey = "405f34a8-6d13-4341-b282-fc01e8e45311";
@@ -44,6 +45,21 @@ namespace Petrolhead2016XT
             #endregion
         }
 
+
+        /// <summary>
+        /// Prevents async operations from crashing into each other
+        /// </summary>
+        /// <example>
+        /// private async Task AsyncMethod()
+        /// {
+        ///     while (App.Busy)
+        ///     {
+        ///         await Task.Delay(100);
+        ///     }
+        ///     App.Busy = true;
+        ///     ... the rest of the method ...
+        /// }
+        /// </example>
         private static bool _Busy = false;
         public static bool Busy
         {
@@ -58,6 +74,9 @@ namespace Petrolhead2016XT
             }
         }
 
+        /// <summary>
+        /// Sets the text used in the busy indicator.
+        /// </summary>
         private static string _BusyStr = "Please wait...";
         public static string BusyString { get { return _BusyStr; } set
             {
@@ -68,6 +87,11 @@ namespace Petrolhead2016XT
                 Views.Shell.SetBusy(Busy, _BusyStr);
             } }
 
+        /// <summary>
+        /// Provides error handling code for Petrolhead
+        /// </summary>
+        /// <param name="sender">Object that threw the unhandled exception</param>
+        /// <param name="e">Event args for the instance</param>
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             try
@@ -116,6 +140,11 @@ namespace Petrolhead2016XT
             }
         }
 
+        /// <summary>
+        /// Initializes the application.
+        /// </summary>
+        /// <param name="args">An instance of IActivatedEventArgs</param>
+        /// <returns>A completed Task object</returns>
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
@@ -138,7 +167,16 @@ namespace Petrolhead2016XT
             return Task.CompletedTask;
         }
 
+        /// <summary>
+        /// Provides a global entrypoint into the telemetry client.
+        /// </summary>
         public static TelemetryClient Telemetry { get; set; }
+        /// <summary>
+        /// Performs initialization tasks valid when the state is not restored only.
+        /// </summary>
+        /// <param name="startKind"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
         // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {

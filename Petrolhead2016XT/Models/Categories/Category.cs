@@ -20,6 +20,8 @@ namespace Petrolhead2016XT.Models.Categories
 
             set
             {
+                if (CreationDate != default(DateTimeOffset))
+                    throw new InvalidOperationException("Creation date has already been set.");
                 Set(ref _creationDate, value);
             }
         }
@@ -38,58 +40,66 @@ namespace Petrolhead2016XT.Models.Categories
             }
         }
 
+        private string _Id = Guid.NewGuid().ToString();
         public string Id
         {
             get
             {
-                throw new NotImplementedException();
+                return _Id;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _Id, value);
             }
         }
 
+        private DateTimeOffset _ModifiedDate = default(DateTimeOffset);
         public DateTimeOffset ModifiedDate
         {
             get
             {
-                throw new NotImplementedException();
+                return _ModifiedDate;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _ModifiedDate, value);
             }
         }
 
+        private string _Name = default(string);
         public string Name
         {
             get
             {
-                throw new NotImplementedException();
+                return _Name;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _Name, value);
             }
         }
 
         public int CompareTo(string other)
         {
-            throw new NotImplementedException();
+            if (Name == other)
+                return 0;
+            return 1;
         }
 
         public int CompareTo(ICategory other)
         {
-            throw new NotImplementedException();
+            if (this == other)
+                return 0;
+            return 1;
         }
 
         public bool ResetId()
         {
-            throw new NotImplementedException();
+            Id = Guid.NewGuid().ToString();
+            return true;
         }
     }
 }

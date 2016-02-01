@@ -10,6 +10,7 @@ using Windows.UI.Popups;
 using Template10.Common;
 using System.IO;
 using NotificationsExtensions.Toasts;
+using Windows.UI.Notifications;
 
 namespace Petrolhead2016XT
 {
@@ -41,6 +42,30 @@ namespace Petrolhead2016XT
             #endregion
         }
 
+        private static bool _Busy = false;
+        public static bool Busy
+        {
+            get
+            {
+                return _Busy;
+            }
+            set
+            {
+                _Busy = value;
+                Views.Shell.SetBusy(value, BusyString);
+            }
+        }
+
+        private static string _BusyStr = "Please wait...";
+        public static string BusyString { get { return _BusyStr; } set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    _BusyStr = "Please wait...";
+                else
+                    _BusyStr = value;
+                Views.Shell.SetBusy(Busy, _BusyStr);
+            } }
+
         private async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             try
@@ -65,19 +90,27 @@ namespace Petrolhead2016XT
                     }
                     catch (Exception ex)
                     {
+                        Telemetry.TrackException(ex);
                         ToastContent content = new ToastContent()
                         {
                             Visual = new ToastVisual()
                             {
-                                TitleText = new ToastText() { }
-                            }
+                                TitleText = new ToastText() { Text = "Fatal Error" },
+                                BodyTextLine1 = new ToastText() { Text = "Petrolhead couldn't display a dialog to inform you about the problem, so it has closed." },
+
+                            },
+                            Scenario = ToastScenario.Reminder,
                         };
+                        ToastNotification toast = new ToastNotification(content.GetXml());
+                        ToastNotificationManager.CreateToastNotifier().Show(toast);
+                        Exit();
                     }
                 });
+                
             }
             catch (Exception ex)
             {
-                Toas
+                Telemetry.TrackException(ex);
             }
         }
 

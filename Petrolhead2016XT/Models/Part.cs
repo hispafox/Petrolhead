@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Common;
 using Template10.Mvvm;
 using Windows.Globalization.DateTimeFormatting;
 using Windows.Globalization.NumberFormatting;
+using Windows.UI.Popups;
 
 namespace Petrolhead2016XT.Models
 {
@@ -197,10 +199,15 @@ namespace Petrolhead2016XT.Models
             return true;
         }
 
-        public bool UpdateData()
+        public async Task<bool> UpdateData()
         {
             try
             {
+                while (App.Busy)
+                {
+                    await Task.Delay(100);
+                }
+                App.Busy = true;
                 CurrencyFormatter currency = new CurrencyFormatter(Windows.System.UserProfile.GlobalizationPreferences.Currencies[0]);
                 HumanCost = currency.Format(Cost);
                 ModifiedDate = DateTime.Now;
@@ -208,14 +215,18 @@ namespace Petrolhead2016XT.Models
             }
             catch (Exception ex)
             {
-#warning Don't forget to implement error telemetry in Part.cs!
+                App.Telemetry.TrackException(ex);
                 return false;
+            }
+            finally
+            {
+                App.Busy = false;
             }
         }
 
         public int CompareTo(IPart other)
         {
-            if ((IPart)this == other))
+            if ((IPart)this == other)
                 return 0;
             return 1;
         }

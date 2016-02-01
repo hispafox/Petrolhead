@@ -8,7 +8,7 @@ namespace Petrolhead2016XT.Models
 {
     public interface IDataModel : IModel, IComparable<string>, IComparable<ICategory>
     {
-        bool UpdateData();
+        Task<bool> UpdateData();
         long Cost { get; set; }
         string HumanCost { get; set; }
         long BudgetTotal { get; set; }

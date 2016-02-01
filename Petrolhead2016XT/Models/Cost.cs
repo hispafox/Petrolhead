@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Globalization.DateTimeFormatting;
+using Windows.Globalization.NumberFormatting;
 
 namespace Petrolhead2016XT.Models
 {
@@ -32,72 +34,78 @@ namespace Petrolhead2016XT.Models
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _category, value);
             }
         }
 
+        private long _cost = default(long);
+	
         public long Cost
         {
             get
             {
-                throw new NotImplementedException();
+                return _cost;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _cost, value);
             }
         }
 
+        private DateTimeOffset _creationDate = default(DateTimeOffset);
         public DateTimeOffset CreationDate
         {
             get
             {
-                throw new NotImplementedException();
+                return _creationDate;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _creationDate, value);
             }
         }
 
+        private string _description = default(string);
         public string Description
         {
             get
             {
-                throw new NotImplementedException();
+                return _description;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _description, value);
             }
         }
 
+        private string _humanCost = default(string);
         public string HumanCost
         {
             get
             {
-                throw new NotImplementedException();
+                return _humanCost;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _humanCost, value);
             }
         }
 
+        private string _humanTransactionDate = default(string);
         public string HumanTransactionDate
         {
             get
             {
-                throw new NotImplementedException();
+                return _humanTransactionDate;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _humanTransactionDate, value);
             }
         }
 
@@ -115,97 +123,109 @@ namespace Petrolhead2016XT.Models
             }
         }
 
+        private Uri _imageLocation = default(Uri);
         public Uri ImageLocation
         {
             get
             {
-                throw new NotImplementedException();
+                return _imageLocation;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _imageLocation, value);
             }
         }
 
+        private bool _isIncludedInBudget = default(bool);
         public bool IsBudgetIncluded
         {
             get
             {
-                throw new NotImplementedException();
+                return _isIncludedInBudget;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _isIncludedInBudget, value);
             }
         }
 
+        private DateTimeOffset _modifiedDate = default(DateTimeOffset);
         public DateTimeOffset ModifiedDate
         {
             get
             {
-                throw new NotImplementedException();
+                return _modifiedDate;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _modifiedDate, value);
             }
         }
 
+        private string _name = default(string);
         public string Name
         {
             get
             {
-                throw new NotImplementedException();
+                return _name;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _name, value);
             }
         }
 
+        private List<IPart> _Parts = default(List<IPart>);
         public List<IPart> Parts
         {
             get
             {
-                throw new NotImplementedException();
+                return _Parts;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _Parts, value);
             }
         }
 
+        private DateTimeOffset _transactionDate = default(DateTimeOffset);
         public DateTimeOffset TransactionDate
         {
             get
             {
-                throw new NotImplementedException();
+                return _transactionDate;
             }
 
             set
             {
-                throw new NotImplementedException();
+                Set(ref _transactionDate, value);
             }
         }
 
         public int CompareTo(DateTimeOffset other)
         {
-            throw new NotImplementedException();
+            if (TransactionDate.Equals(other))
+                return 0;
+            return 1;
         }
 
         public int CompareTo(ICategory other)
         {
-            throw new NotImplementedException();
+            if (Category.Equals(other))
+                return 0;
+            return 1;
         }
 
         public int CompareTo(string other)
         {
-            throw new NotImplementedException();
+            if (Name.Equals(other))
+                return 0;
+            return 1;
         }
 
         public bool ResetId()
@@ -240,7 +260,14 @@ namespace Petrolhead2016XT.Models
 
         public List<IPart> Search(string name)
         {
-            throw new NotImplementedException();
+            List<IPart> parts = new List<IPart>();
+
+            foreach (var part in Parts)
+            {
+                if (part.Name == name)
+                    parts.Add(part);
+            }
+            return parts;
         }
 
         public List<IPart> Search(ICategory category)
@@ -255,9 +282,47 @@ namespace Petrolhead2016XT.Models
             return parts;
         }
 
-        public bool UpdateData()
+        /// <summary>
+        /// Expense.UpdateData() method
+        /// Updates all data
+        /// </summary>
+        /// <returns>
+        /// Returns a bool object.
+        /// </returns>
+        public async Task<bool> UpdateData()
         {
-            throw new NotImplementedException();
+            try
+            {
+                while (App.Busy)
+                {
+                    await Task.Delay(100);
+                }
+                App.Busy = true;
+                BudgetTotal = 0;
+                Cost = 0;
+                foreach (var part in Parts)
+                {
+                    Cost += part.Cost;
+                    if (part.IsBudgetIncluded && this.IsBudgetIncluded)
+                        BudgetTotal += part.Cost;
+                }
+                CurrencyFormatter currency = new CurrencyFormatter(Windows.System.UserProfile.GlobalizationPreferences.Currencies[0]);
+                HumanCost = currency.Format(Cost);
+                DateTimeFormatter datetime = new DateTimeFormatter("shortdate");
+                HumanTransactionDate = datetime.Format(TransactionDate);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                App.Telemetry.TrackException(ex);
+                return false;
+            }
+            finally
+            {
+                App.Busy = false;
+            }
+            
         }
 
         public int CompareTo(IExpense other)

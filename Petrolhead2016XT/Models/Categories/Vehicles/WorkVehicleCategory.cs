@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Petrolhead2016XT.Models.Categories.Vehicles
 {
-    public class WorkVehicleCategory : ICategory
+    public class WorkVehicleCategory : Category
     {
     }
 }

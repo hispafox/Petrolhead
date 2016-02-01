@@ -174,8 +174,8 @@ namespace Petrolhead2016XT
         /// <summary>
         /// Performs initialization tasks valid when the state is not restored only.
         /// </summary>
-        /// <param name="startKind"></param>
-        /// <param name="args"></param>
+        /// <param name="startKind">Type of start</param>
+        /// <param name="args">Instance of IActivatedEventArgs</param>
         /// <returns></returns>
         // runs only when not restored from state
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)

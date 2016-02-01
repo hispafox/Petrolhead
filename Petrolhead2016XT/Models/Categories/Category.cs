@@ -9,7 +9,6 @@ using Template10.Mvvm;
 namespace Petrolhead2016XT.Models.Categories
 {
     /// <summary>
-    /// Models.Categories class
     /// Provides an abstract implementation of ICategory interface.
     /// </summary>
     public abstract class Category : BindableBase, ICategory

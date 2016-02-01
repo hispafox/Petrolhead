@@ -13,8 +13,9 @@ namespace Petrolhead2016XT.Models
 {
     /// <summary>
     /// Models.Part class
-    /// Inherits from the Template10.Mvvm.BindableBase class and the IPart interface.
-    /// Used 
+    /// Inherits from the Template10.Mvvm.BindableBase class.
+    /// Provides an implementation of the IPart interface.
+    /// Acts as a container for one expense.
     /// </summary>
     public class Part : BindableBase, IPart
     {

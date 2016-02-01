@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Petrolhead2016XT.Models
 {
+    /// <summary>
+    /// Models.IExpense interface
+    /// Interface describing an expense
+    /// </summary>
     public interface IExpense : IDataModel, IComparable<DateTimeOffset>, IComparable<IExpense>
     {
         DateTimeOffset TransactionDate { get; set; }

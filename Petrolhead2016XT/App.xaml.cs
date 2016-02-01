@@ -14,9 +14,11 @@ using Windows.UI.Notifications;
 
 namespace Petrolhead2016XT
 {
-    /// Documentation on APIs used in this page:
-    /// https://github.com/Windows-XAML/Template10/wiki
 
+   /// <summary>
+   /// App class
+   /// Provides bootstrapper functionality.
+   /// </summary>
     sealed partial class App : Template10.Common.BootStrapper
     {
        

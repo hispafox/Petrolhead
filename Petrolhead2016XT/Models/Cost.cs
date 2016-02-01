@@ -8,6 +8,11 @@ using Windows.Globalization.NumberFormatting;
 
 namespace Petrolhead2016XT.Models
 {
+    /// <summary>
+    /// Models.Expense class
+    /// Provides an implementation of IExpense
+    /// Provides transaction-related data; can contain multiple IPart objects.
+    /// </summary>
     public class Expense : Template10.Mvvm.BindableBase, IExpense
     {
         private long _budgetTotal = default(long);

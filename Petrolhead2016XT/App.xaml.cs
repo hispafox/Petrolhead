@@ -37,15 +37,15 @@ namespace Petrolhead2016XT
             UnhandledException += App_UnhandledException;
             #region App settings
 
-            var _settings = SettingsService.Instance;
-            RequestedTheme = _settings.AppTheme;
-            CacheMaxDuration = _settings.CacheMaxDuration;
-            ShowShellBackButton = _settings.UseShellBackButton;
+            
+            RequestedTheme = Settings.AppTheme;
+            CacheMaxDuration = Settings.CacheMaxDuration;
+            ShowShellBackButton = Settings.UseShellBackButton;
 
             #endregion
         }
 
-
+        public static SettingsService Settings { get; set; } = SettingsService.Instance;
         /// <summary>
         /// Prevents async operations from crashing into each other
         /// </summary>
@@ -148,9 +148,10 @@ namespace Petrolhead2016XT
         // runs even if restored from state
         public override Task OnInitializeAsync(IActivatedEventArgs args)
         {
-            // content may already be shell when resuming
+            
             try
             {
+                // content may already be shell when resuming
                 if ((Window.Current.Content as Views.Shell) == null)
                 {
                     // setup hamburger shell

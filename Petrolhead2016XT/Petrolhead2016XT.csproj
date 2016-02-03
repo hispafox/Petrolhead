@@ -100,6 +100,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\IdentityVerificationException.cs" />
     <Compile Include="Models\Categories\Category.cs" />
     <Compile Include="Models\Categories\Vehicles\WorkVehicleCategory.cs" />
     <Compile Include="Models\Cost.cs" />
@@ -112,6 +113,13 @@
     <Compile Include="Models\Part.cs" />
     <Compile Include="Models\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IPartRepository.cs" />
+    <Compile Include="Repositories\PartRepository.cs" />
+    <Compile Include="Services\FileService\FileHelper.cs" />
+    <Compile Include="Services\SecurityService\AuthenticationHelper.cs" />
+    <Compile Include="Services\SecurityService\CryptoHelper.cs" />
+    <Compile Include="Services\SecurityService\LicenseHelper.cs" />
+    <Compile Include="Services\SecurityService\SecurityService.cs" />
     <Compile Include="Services\SettingsServices\ISettingsService.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />

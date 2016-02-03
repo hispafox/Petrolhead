@@ -8,5 +8,7 @@ namespace Petrolhead2016XT.Services.SettingsServices
         bool UseShellBackButton { get; set; }
         ApplicationTheme AppTheme { get; set; }
         TimeSpan CacheMaxDuration { get; set; }
+        bool IsEncryptionEnabled { get; set; }
+        
     }
 }

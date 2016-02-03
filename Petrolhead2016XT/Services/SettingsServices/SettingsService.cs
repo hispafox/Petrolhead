@@ -75,6 +75,19 @@ namespace Petrolhead2016XT.Services.SettingsServices
                 BootStrapper.Current.CacheMaxDuration = value;
             }
         }
+
+        public bool IsEncryptionEnabled
+        {
+            get
+            {
+                return _helper.Read(nameof(IsEncryptionEnabled), false, Template10.Services.SettingsService.SettingsStrategies.Roam);
+            }
+
+            set
+            {
+                _helper.Write(nameof(IsEncryptionEnabled), true, Template10.Services.SettingsService.SettingsStrategies.Roam);
+            }
+        }
     }
 }
 

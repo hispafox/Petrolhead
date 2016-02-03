@@ -11,7 +11,7 @@ namespace Petrolhead2016XT.Models.Categories
     /// <summary>
     /// Provides an abstract implementation of ICategory interface.
     /// </summary>
-    public abstract class Category : BindableBase, ICategory
+    public  class Category : BindableBase, ICategory
     {
         private DateTimeOffset _creationDate = default(DateTimeOffset);
         public DateTimeOffset CreationDate
